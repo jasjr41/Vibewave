@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIBEWAVE - Your Ultimate Jazz Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+       
+        body.matte {
+            background: #0a0a0a;
+        }
+
+        
+        body.shining {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-btn, .fullscreen-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #e3e2dd;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover, .fullscreen-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .jazz-note {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 215, 0, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: #ff6262;
+            margin-right: 15px;
+            text-shadow: 0 0 10px rgba(167, 84, 84, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg,  #f25d5d, #e94040);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .description {
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: #d0d0d0;
+            font-size: 1.1rem;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg,  #f84e4e, #502121);
+            color: #1a1a1a;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(149, 122, 122, 0.3);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .button:hover::after {
+            left: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        
+        .shining-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 70%);
+            filter: blur(20px);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .effect-1 {
+            top: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+        }
+
+        .effect-2 {
+            bottom: 15%;
+            right: 15%;
+            width: 250px;
+            height: 250px;
+            animation-delay: 2s;
+        }
+
+        .effect-3 {
+            top: 50%;
+            left: 70%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        
+        body:fullscreen {
+            background: #000;
+        }
+
+        body:-webkit-full-screen {
+            background: #000;
+        }
+
+        body:-moz-full-screen {
+            background: #000;
+        }
+
+        body:-ms-fullscreen {
+            background: #000;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .card {
+                padding: 2rem;
+            }
+            
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+            
+            .controls {
+                top: 15px;
+                right: 15px;
+                flex-direction: column;
+            }
+            
+            .toggle-btn, .fullscreen-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="matte">
+    <div class="controls">
+        <button class="toggle-btn" id="toggleBg">
+            <i class="fas fa-palette"></i>
+            <span id="bgText">Shining Black</span>
+        </button>
+        <button class="fullscreen-btn" id="fullscreenBtn">
+            <i class="fas fa-expand"></i>
+            <span id="fullscreenText">Full Screen</span>
+        </button>
+    </div>
+    
+    <div class="background-elements" id="backgroundElements">
+        <div class="shining-effect effect-1"></div>
+        <div class="shining-effect effect-2"></div>
+        <div class="shining-effect effect-3"></div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <i class="fa-solid fa-music"></i>
+                <h1>VIBEWAVE</h1>
+            </div>
+            
+            <p class="tagline">Your Ultimate Jazz Experience</p>
+            
+            <p class="description">
+                Step into the spotlight with VIBEWAVE, the ultimate jazz application. 
+                Curate your own smoky, late-night lounge session with an intuitive player 
+                that puts you in complete control. Feel the rhythm, manage the mood, 
+                and immerse yourself in a world of timeless sound.
+            </p>
+            
+            <a href="main.html" class="button" id="getStartedBtn">
+                <i class="fa-solid fa-play" style="margin-right: 8px;"></i>
+                GET STARTED
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 VIBEWAVE. All rights reserved.</p>
+    </footer>
+
+    <script>
+       
+        function saveFullscreenState() {
+            localStorage.setItem('jazzyFullscreenState', document.fullscreenElement ? 'true' : 'false');
+        }
+
+        
+        function restoreFullscreenState() {
+            const fullscreenState = localStorage.getItem('jazzyFullscreenState');
+            if (fullscreenState === 'true' && !document.fullscreenElement) {
+                setTimeout(() => {
+                    toggleFullscreen();
+                }, 100);
+            }
+        }
+
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        
+        function updateFullscreenUI() {
+            const fullscreenText = document.getElementById('fullscreenText');
+            const fullscreenIcon = document.querySelector('#fullscreenBtn i');
+            
+            if (document.fullscreenElement) {
+                fullscreenText.textContent = 'Exit Full Screen';
+                fullscreenIcon.className = 'fas fa-compress';
+            } else {
+                fullscreenText.textContent = 'Full Screen';
+                fullscreenIcon.className = 'fas fa-expand';
+            }
+            
+            saveFullscreenState();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const background = document.getElementById('backgroundElements');
+            const notes = ['♩', '♪', '♫', '♬', '🎵', '🎶'];
+            
+            for (let i = 0; i < 15; i++) {
+                const note = document.createElement('div');
+                note.className = 'jazz-note';
+                note.textContent = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + 'vw';
+                note.style.animationDelay = Math.random() * 15 + 's';
+                note.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                background.appendChild(note);
+            }
+            
+            const toggleBtn = document.getElementById('toggleBg');
+            const bgText = document.getElementById('bgText');
+            const body = document.body;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (body.classList.contains('matte')) {
+                    body.classList.remove('matte');
+                    body.classList.add('shining');
+                    bgText.textContent = 'Matte Black';
+                } else {
+                    body.classList.remove('shining');
+                    body.classList.add('matte');
+                    bgText.textContent = 'Shining Black';
+                }
+            });
+
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const getStartedBtn = document.getElementById('getStartedBtn');
+
+            restoreFullscreenState();
+
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+            getStartedBtn.addEventListener('click', function(e) {
+                saveFullscreenState();
+            });
+
+            document.addEventListener('fullscreenchange', updateFullscreenUI);
+            document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+            document.addEventListener('msfullscreenchange', updateFullscreenUI);
+
+            updateFullscreenUI();
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F11') {
+                    e.preventDefault();
+                    toggleFullscreen();
+                }
+            });
+
+            window.addEventListener('beforeunload', saveFullscreenState);
+
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    saveFullscreenState();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

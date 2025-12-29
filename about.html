@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - JAZZY Music Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+        /* Matte Black Background */
+        body.matte {
+            background: #0a0a0a;
+        }
+
+        /* Shining Black Background */
+        body.shining {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+
+        .background-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #9b9b9b;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(254, 91, 91, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .jazz-note {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 215, 0, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .shining-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 70%);
+            filter: blur(20px);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .effect-1 {
+            top: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+        }
+
+        .effect-2 {
+            bottom: 15%;
+            right: 15%;
+            width: 250px;
+            height: 250px;
+            animation-delay: 2s;
+        }
+
+        .effect-3 {
+            top: 50%;
+            left: 70%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #f4f4f4;
+            text-shadow: 0 0 10px rgba(94, 94, 94, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #dadada, #feb3b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(237, 125, 125, 0.2);
+            color: #dcdcdc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #f65f5f;
+        }
+
+        .page-header p {
+            color: #a0a0a0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section h2 {
+            color: #ff7575;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section h3 {
+            margin: 1.5rem 0 0.8rem;
+            color: #fca3a3;
+        }
+
+        .content-section p {
+            margin-bottom: 1.2rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+
+        .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            color: #a0a0a0;
+            line-height: 1.5;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .about-text {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(246, 131, 131, 0.3);
+            box-shadow: 0 10px 20px rgba(208, 93, 93, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ff7575;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #ff7575;
+        }
+
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(117, 117, 117, 0.1);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: rgba(246, 131, 131, 0.3);
+        }
+
+        .member-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            background: linear-gradient(45deg, #ff7575, #f65f5f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            border: 2px solid rgba(246, 131, 131, 0.3);
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #ff7575;
+        }
+
+        .member-role {
+            color: #fca3a3;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .member-bio {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .app-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff7575;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 1rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(143, 143, 143, 0.05);
+            border-radius: 10px;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #ff7575;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff7575, #f65f5f);
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(220, 82, 82, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(248, 88, 88, 0.5);
+        }
+
+        .update-date {
+            font-style: italic;
+            color: #a0a0a0;
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ff7575;
+        }
+
+        .copyright {
+            color: #a0a0a0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .background-toggle {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .toggle-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="matte">
+    <div class="background-toggle">
+        <button class="toggle-btn" id="toggleBg">
+            <i class="fas fa-palette"></i>
+            <span id="bgText">Shining Black</span>
+        </button>
+    </div>
+    
+    <div class="background-elements" id="backgroundElements">
+        <div class="shining-effect effect-1"></div>
+        <div class="shining-effect effect-2"></div>
+        <div class="shining-effect effect-3"></div>
+    </div>
+    
+    <header>
+        <div class="nav-container">
+            <a href="main.html" class="logo">
+                <i class="fa-solid fa-music"></i>
+                <h1>JAZZY</h1>
+            </a>
+            <nav class="nav-links">
+                <a href="main.html">Player</a>
+                <a href="legal.html">Legal</a>
+                <a href="help.html">Help</a>
+                <a href="about.html" class="active">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>About JAZZY</h1>
+            <p>Discover the story behind your favorite jazz music application and the team that makes it all possible.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Our Story</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Welcome to <strong>JAZZY</strong>, the ultimate destination for jazz enthusiasts. Our application was born from a deep passion for jazz music and a desire to create the perfect digital listening experience.</p>
+                    
+                    <p>Founded in 2023, JAZZY brings together classic jazz sounds with modern technology. We believe that jazz is more than just music—it's an emotion, a culture, and a way of life that deserves to be preserved and celebrated.</p>
+                    
+                    <p>Our platform features an extensive library of jazz classics, from the smooth sounds of Miles Davis to the energetic rhythms of Duke Ellington, alongside contemporary jazz artists who are pushing the boundaries of the genre.</p>
+                </div>
+                
+                <div class="about-text">
+                    <p>At JAZZY, we're committed to delivering exceptional audio quality with our high-fidelity streaming technology. Our intuitive interface makes it easy to discover new favorites or revisit timeless classics.</p>
+                    
+                    <p>We also support emerging jazz artists through our dedicated "New Voices" program, providing a platform for the next generation of jazz innovators to share their music with the world.</p>
+                    
+                    <p>Join our community of jazz lovers and experience the magic of jazz, reimagined for the digital age. Whether you're a lifelong fan or new to the genre, JAZZY offers something for every ear and every mood.</p>
+                </div>
+            </div>
+
+            <div class="app-stats">
+                <div class="stat-card">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Jazz Tracks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Artists</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Streaming</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Why Choose JAZZY?</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+                    <h3 class="feature-title">Advanced Controls</h3>
+                    <p>Full playback controls, equalizer settings, and customizable audio preferences for the perfect listening experience.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headphones"></i></div>
+                    <h3 class="feature-title">High-Quality Audio</h3>
+                    <p>Experience jazz in stunning clarity with our high-fidelity audio streaming and customizable equalizer.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="feature-title">Cross-Platform</h3>
+                    <p>Access your music anywhere, anytime on all your devices with seamless synchronization.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                    <h3 class="feature-title">Personalized Experience</h3>
+                    <p>Smart recommendations based on your listening habits and favorite artists.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Meet Our Team</h2>
+            
+            <div class="team">
+                <div class="team-member">
+                    <div class="member-photo">J</div>
+                    <h3 class="member-name">JASKIRAT SINGH</h3>
+                    <p class="member-role">Founder & CEO</p>
+                    <p class="member-bio">Jazz enthusiast with 15+ years in music technology.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">A</div>
+                    <h3 class="member-name">ANISHEK KUMAR</h3>
+                    <p class="member-role">Head of Music Curation</p>
+                    <p class="member-bio">Former jazz radio host and music historian.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">Ready to Experience JAZZY?</h2>
+            <p>Join thousands of jazz enthusiasts and start your musical journey today.</p> <BR> 
+            <a href="main.html" class="cta-button">Start Listening Now</a>
+        </div>
+
+        <div class="update-date">
+            <p>This page was last updated on January 1, 2025</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p>&copy; 2025 JAZZY. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="legal.html">Terms of Service</a>
+                <a href="legal.html#privacy">Privacy Policy</a>
+                <a href="help.html">Help Center</a>
+                <a href="legal.html#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating music notes in the background
+        document.addEventListener('DOMContentLoaded', function() {
+            const background = document.getElementById('backgroundElements');
+            const notes = ['♩', '♪', '♫', '♬', '🎵', '🎶'];
+            
+            for (let i = 0; i < 15; i++) {
+                const note = document.createElement('div');
+                note.className = 'jazz-note';
+                note.textContent = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + 'vw';
+                note.style.animationDelay = Math.random() * 15 + 's';
+                note.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                background.appendChild(note);
+            }
+            
+            // Background toggle functionality
+            const toggleBtn = document.getElementById('toggleBg');
+            const bgText = document.getElementById('bgText');
+            const body = document.body;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (body.classList.contains('matte')) {
+                    body.classList.remove('matte');
+                    body.classList.add('shining');
+                    bgText.textContent = 'Matte Black';
+                } else {
+                    body.classList.remove('shining');
+                    body.classList.add('matte');
+                    bgText.textContent = 'Shining Black';
+                }
+            });
+
+            
+            const yearElement = document.querySelector('.copyright p');
+            if(yearElement) {
+                yearElement.textContent = yearElement.textContent.replace('2025', new Date().getFullYear());
+            }
+
+            
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                    this.style.borderColor = 'rgba(255, 215, 0, 0.4)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

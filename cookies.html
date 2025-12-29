@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy - VIBEWAVE Music Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+        body.matte {
+            background: #0a0a0a;
+        }
+
+        
+        body.shining {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+
+        .background-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #9b9b9b;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(254, 91, 91, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .jazz-note {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 215, 0, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .shining-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 70%);
+            filter: blur(20px);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .effect-1 {
+            top: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+        }
+
+        .effect-2 {
+            bottom: 15%;
+            right: 15%;
+            width: 250px;
+            height: 250px;
+            animation-delay: 2s;
+        }
+
+        .effect-3 {
+            top: 50%;
+            left: 70%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #f4f4f4;
+            text-shadow: 0 0 10px rgba(94, 94, 94, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #dadada, #feb3b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-btn {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(237, 125, 125, 0.2);
+            color: #dcdcdc;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #f65f5f;
+        }
+
+        .page-header p {
+            color: #a0a0a0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section h2 {
+            color: #ff7575;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section h3 {
+            margin: 1.5rem 0 0.8rem;
+            color: #fca3a3;
+        }
+
+        .content-section p {
+            margin-bottom: 1.2rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+
+        .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.8rem;
+            color: #a0a0a0;
+            line-height: 1.5;
+        }
+
+        .cookie-settings {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .cookie-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cookie-toggle:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .toggle-info h4 {
+            color: #f5f5f5;
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .toggle-info p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: rgb(213, 84, 84);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #b4b4b4;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .cookie-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cookie-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cookie-btn.primary {
+            background: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .cookie-btn.primary:hover {
+            background: rgba(215, 215, 215, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .cookie-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ed3535;
+        }
+
+        .cookie-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .cookie-table th,
+        .cookie-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cookie-table th {
+            color: #bababa;
+            font-weight: 600;
+        }
+
+        .cookie-table td {
+            color: #bdbdbd;
+        }
+
+        .update-date {
+            font-style: italic;
+            color: #a0a0a0;
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #bcbcbc;
+        }
+
+        .copyright {
+            color: #a0a0a0;
+        }
+
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cookie-toggle {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .toggle-switch {
+                align-self: flex-end;
+            }
+
+            .cookie-actions {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .background-toggle {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .toggle-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .cookie-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body class="matte">
+    <div class="background-toggle">
+        <button class="toggle-btn" id="toggleBg">
+            <i class="fas fa-palette"></i>
+            <span id="bgText">Shining Black</span>
+        </button>
+    </div>
+    
+    <div class="background-elements" id="backgroundElements">
+        <div class="shining-effect effect-1"></div>
+        <div class="shining-effect effect-2"></div>
+        <div class="shining-effect effect-3"></div>
+    </div>
+    
+    <header>
+        <div class="nav-container">
+            <a href="main.html" class="logo">
+                <i class="fa-solid fa-music"></i>
+                <h1>VIBEWAVE</h1>
+            </a>
+            <a href="help.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to Help Center
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Cookie Policy</h1>
+            <p>Learn how VIBEWAVE uses cookies and manage your preferences to enhance your music experience.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>About Cookies</h2>
+            <p>Cookies are small text files that are placed on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and understanding how you use our service.</p>
+            
+            <h3>Why We Use Cookies</h3>
+            <p>At VIBEWAVE, we use cookies to:</p>
+            <ul>
+                <li>Remember your login details and preferences</li>
+                <li>Provide personalized music recommendations</li>
+                <li>Analyze how our service is used to make improvements</li>
+                <li>Ensure the security of your account</li>
+                <li>Deliver relevant content and advertisements</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>Cookie Settings</h2>
+            <p>You can manage your cookie preferences below. Please note that disabling certain cookies may affect your experience on our website.</p>
+            
+            <div class="cookie-settings">
+                <div class="cookie-toggle">
+                    <div class="toggle-info">
+                        <h4>Essential Cookies</h4>
+                        <p>Required for the website to function properly. These cannot be disabled.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked disabled>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="cookie-toggle">
+                    <div class="toggle-info">
+                        <h4>Preference Cookies</h4>
+                        <p>Remember your settings, volume levels, and equalizer preferences.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="prefCookies" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="cookie-toggle">
+                    <div class="toggle-info">
+                        <h4>Analytics Cookies</h4>
+                        <p>Help us understand how users interact with VIBEWAVE to improve our service.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="analyticsCookies" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                
+                <div class="cookie-toggle">
+                    <div class="toggle-info">
+                        <h4>Marketing Cookies</h4>
+                        <p>Used to deliver personalized music recommendations and advertisements.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="marketingCookies">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="cookie-actions">
+                    <button id="saveCookieSettings" class="cookie-btn primary">
+                        <i class="fas fa-save"></i>
+                        Save Preferences
+                    </button>
+                    <button id="acceptAll" class="cookie-btn secondary">
+                        <i class="fas fa-check"></i>
+                        Accept All Cookies
+                    </button>
+                    <button id="rejectAll" class="cookie-btn secondary">
+                        <i class="fas fa-times"></i>
+                        Reject Non-Essential
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Types of Cookies We Use</h2>
+            
+            <div class="cookie-table-container">
+                <table class="cookie-table">
+                    <thead>
+                        <tr>
+                            <th>Cookie Type</th>
+                            <th>Purpose</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Session Cookies</td>
+                            <td>Maintain your login session and remember your actions during your visit</td>
+                            <td>Until you close the browser</td>
+                        </tr>
+                        <tr>
+                            <td>Preference Cookies</td>
+                            <td>Remember your settings, theme preferences, and audio settings</td>
+                            <td>1 year</td>
+                        </tr>
+                        <tr>
+                            <td>Analytics Cookies</td>
+                            <td>Collect information about how you use VIBEWAVE to help us improve</td>
+                            <td>2 years</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing Cookies</td>
+                            <td>Track your interests to provide relevant music recommendations</td>
+                            <td>6 months</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Third-Party Cookies</h2>
+            <p>We may also use cookies from trusted third-party services to enhance your experience:</p>
+            <ul>
+                <li><strong>Google Analytics:</strong> Helps us understand how users interact with our website</li>
+                <li><strong>Payment Processors:</strong> Necessary for processing subscription payments</li>
+                <li><strong>Social Media Platforms:</strong> Enable social sharing features</li>
+                <li><strong>Advertising Partners:</strong> Help us deliver relevant music-related content</li>
+            </ul>
+            
+            <h3>Managing Cookies in Your Browser</h3>
+            <p>You can also manage cookies through your browser settings. Most browsers allow you to:</p>
+            <ul>
+                <li>See what cookies are stored and delete them</li>
+                <li>Block cookies from specific sites</li>
+                <li>Block all third-party cookies</li>
+                <li>Clear all cookies when you close the browser</li>
+            </ul>
+        </div>
+
+        <div class="update-date">
+            <p>This cookie policy was last updated on OCTOBER 1, 2025</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p>&copy; 2025 VIBEWAVE. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="legal.html">Terms of Service</a>
+                <a href="legal.html#privacy">Privacy Policy</a>
+                <a href="help.html">Help Center</a>
+                <a href="legal.html#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating music notes in the background
+        document.addEventListener('DOMContentLoaded', function() {
+            const background = document.getElementById('backgroundElements');
+            const notes = ['♩', '♪', '♫', '♬', '🎵', '🎶'];
+            
+            for (let i = 0; i < 15; i++) {
+                const note = document.createElement('div');
+                note.className = 'jazz-note';
+                note.textContent = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + 'vw';
+                note.style.animationDelay = Math.random() * 15 + 's';
+                note.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                background.appendChild(note);
+            }
+            
+            // Background toggle functionality
+            const toggleBtn = document.getElementById('toggleBg');
+            const bgText = document.getElementById('bgText');
+            const body = document.body;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (body.classList.contains('matte')) {
+                    body.classList.remove('matte');
+                    body.classList.add('shining');
+                    bgText.textContent = 'Matte Black';
+                } else {
+                    body.classList.remove('shining');
+                    body.classList.add('matte');
+                    bgText.textContent = 'Shining Black';
+                }
+            });
+
+            // Cookie settings functionality
+            const saveCookieBtn = document.getElementById('saveCookieSettings');
+            const acceptAllBtn = document.getElementById('acceptAll');
+            const rejectAllBtn = document.getElementById('rejectAll');
+            
+            saveCookieBtn.addEventListener('click', () => {
+                const prefCookies = document.getElementById('prefCookies').checked;
+                const analyticsCookies = document.getElementById('analyticsCookies').checked;
+                const marketingCookies = document.getElementById('marketingCookies').checked;
+                
+                // In a real application, you would save these preferences to localStorage or send to server
+                localStorage.setItem('vibewave_cookie_prefs', JSON.stringify({
+                    preferences: prefCookies,
+                    analytics: analyticsCookies,
+                    marketing: marketingCookies
+                }));
+                
+                // Show visual feedback
+                showFeedback(saveCookieBtn, 'Preferences Saved!', '#4CAF50');
+            });
+
+            acceptAllBtn.addEventListener('click', () => {
+                document.getElementById('prefCookies').checked = true;
+                document.getElementById('analyticsCookies').checked = true;
+                document.getElementById('marketingCookies').checked = true;
+                
+                localStorage.setItem('vibewave_cookie_prefs', JSON.stringify({
+                    preferences: true,
+                    analytics: true,
+                    marketing: true
+                }));
+                
+                showFeedback(acceptAllBtn, 'All Cookies Accepted!', '#4CAF50');
+            });
+
+            rejectAllBtn.addEventListener('click', () => {
+                document.getElementById('prefCookies').checked = false;
+                document.getElementById('analyticsCookies').checked = false;
+                document.getElementById('marketingCookies').checked = false;
+                
+                localStorage.setItem('vibewave_cookie_prefs', JSON.stringify({
+                    preferences: false,
+                    analytics: false,
+                    marketing: false
+                }));
+                
+                showFeedback(rejectAllBtn, 'Non-Essential Cookies Rejected!', '#4CAF50');
+            });
+
+            function showFeedback(button, message, color) {
+                const originalText = button.innerHTML;
+                const originalBg = button.style.background;
+                const originalColor = button.style.color;
+                
+                button.innerHTML = `<i class="fas fa-check"></i> ${message}`;
+                button.style.background = `rgba(${color === '#4CAF50' ? '76, 175, 80' : '255, 215, 0'}, 0.3)`;
+                button.style.color = color;
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = originalBg;
+                    button.style.color = originalColor;
+                }, 3000);
+            }
+
+            // Load saved preferences
+            const savedPrefs = localStorage.getItem('vibewave_cookie_prefs');
+            if (savedPrefs) {
+                const prefs = JSON.parse(savedPrefs);
+                document.getElementById('prefCookies').checked = prefs.preferences;
+                document.getElementById('analyticsCookies').checked = prefs.analytics;
+                document.getElementById('marketingCookies').checked = prefs.marketing;
+            }
+
+            // Update current year in copyright
+            const yearElement = document.querySelector('.copyright p');
+            if(yearElement) {
+                yearElement.textContent = yearElement.textContent.replace('2025', new Date().getFullYear());
+            }
+        });
+    </script>
+</body>
+</html>
