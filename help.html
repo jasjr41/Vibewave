@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - VIBEWAVE Music Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+        /* Matte Black Background */
+        body.matte {
+            background: #0a0a0a;
+        }
+
+        /* Shining Black Background */
+        body.shining {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+        }
+
+        .background-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffd700;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .background-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .jazz-note {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 215, 0, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .shining-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 70%);
+            filter: blur(20px);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        .effect-1 {
+            top: 10%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+        }
+
+        .effect-2 {
+            bottom: 15%;
+            right: 15%;
+            width: 250px;
+            height: 250px;
+            animation-delay: 2s;
+        }
+
+        .effect-3 {
+            top: 50%;
+            left: 70%;
+            width: 150px;
+            height: 150px;
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: #c8c8c8;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6363, #ec8b8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #f5f5f5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(129, 129, 129, 0.2);
+            color: #dedede;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #dc5252;
+        }
+
+        .page-header p {
+            color: #c7c7c7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tab-navigation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .tab-btn {
+            color: #f5f5f5;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(255, 215, 0, 0.2);
+            color: #a5a5a5;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section h2 {
+            color: #ea9797;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-section h3 {
+            margin: 1.5rem 0 0.5rem;
+            color: #d0d0d0;
+        }
+
+        .content-section p {
+            margin-bottom: 1rem;
+            color: #a0a0a0;
+        }
+
+        .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+            color: #a0a0a0;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #f5f5f5;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            color: #a0a0a0;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .cookie-settings {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .cookie-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #e0e0e0;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .update-date {
+            font-style: italic;
+            color: #a0a0a0;
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #d6d6d6;
+        }
+
+        .copyright {
+            color: #a0a0a0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .background-toggle {
+                top: 15px;
+                right: 15px;
+            }
+            
+            .toggle-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="matte">
+    <div class="background-toggle">
+        <button class="toggle-btn" id="toggleBg">
+            <i class="fas fa-palette"></i>
+            <span id="bgText">Shining Black</span>
+        </button>
+    </div>
+    
+    <div class="background-elements" id="backgroundElements">
+        <div class="shining-effect effect-1"></div>
+        <div class="shining-effect effect-2"></div>
+        <div class="shining-effect effect-3"></div>
+    </div>
+    
+    <header>
+        <div class="nav-container">
+            <a href="main.html" class="logo">
+                <i class="fa-solid fa-music"></i>
+                <h1>VIBEWAVE</h1>
+            </a>
+            <nav class="nav-links">
+                <a href="main.html">Player</a>
+                <a href="legal.html">Legal</a>
+                <a href="help.html" class="active">Help Center</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Help Center</h1>
+            <p>Find answers to common questions and learn how to make the most of your VIBEWAVE experience.</p>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="help">Help & Support</button>
+            <button class="tab-btn" data-tab="cookies">Cookie Settings</button>
+        </div>
+
+        <!-- Help Center Tab -->
+        <div id="help" class="tab-content active">
+            <div class="content-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I create playlists in VIBEWAVE?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To create a playlist, navigate to the "My Playlists" section and click the "+ New Playlist" button. Give your playlist a name and start adding songs from your library. You can drag and drop songs to rearrange them.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I download songs for offline listening?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! With a VIBEWAVE Premium subscription, you can download songs for offline listening. Simply click the download icon next to any song or playlist. Downloaded content will be available in your "Offline" section.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I adjust audio quality settings?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Go to Settings > Audio Quality to adjust your streaming and download quality. Higher quality uses more data but provides better sound. We recommend High Quality (256kbps) for most listeners.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Why is my music skipping or buffering?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Buffering issues are usually related to your internet connection. Try these solutions:</p>
+                        <ul>
+                            <li>Check your internet connection speed</li>
+                            <li>Switch to a lower audio quality in Settings</li>
+                            <li>Close other apps that might be using bandwidth</li>
+                            <li>Restart the VIBEWAVE application</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I share my playlists with friends?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To share a playlist, go to your playlist, click the three-dot menu, and select "Share". You can share via direct link, social media, or messaging apps. Your friends will need a VIBEWAVE account to listen to the full playlist.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Getting Started</h2>
+                
+                <h3>Setting Up Your Profile</h3>
+                <p>Customize your VIBEWAVE experience by setting up your profile. Add a profile picture, select your favorite genres, and tell us about your musical preferences to get better recommendations.</p>
+                
+                <h3>Exploring Music</h3>
+                <p>Use the Discover section to find new music based on your listening habits. Our algorithm learns what you like and suggests new artists and albums you might enjoy.</p>
+                
+                <h3>Using the Equalizer</h3>
+                <p>Access the equalizer in Settings > Audio to customize your listening experience. Choose from presets or create your own custom settings for different genres or listening environments.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Contact Support</h2>
+                <p>Can't find what you're looking for? Our support team is here to help.</p>
+                
+                <div class="contact-info">
+                    <p><strong>Email Support:</strong> support@vibewave.com</p>
+                    <p><strong>Community Forum:</strong> community.vibewave.com</p>
+                    <p><strong>Response Time:</strong> We typically respond within 24 hours</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cookie Settings Tab -->
+        <div id="cookies" class="tab-content">
+            <div class="content-section">
+                <h2>Cookie Preferences</h2>
+                <p>Manage how VIBEWAVE uses cookies to enhance your experience. You can adjust your preferences at any time.</p>
+                
+                <div class="cookie-settings">
+                    <div class="cookie-toggle">
+                        <div class="toggle-info">
+                            <h4>Essential Cookies</h4>
+                            <p>Required for the website to function properly. These cannot be disabled.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="cookie-toggle">
+                        <div class="toggle-info">
+                            <h4>Preference Cookies</h4>
+                            <p>Remember your settings, volume levels, and equalizer preferences.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="prefCookies" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="cookie-toggle">
+                        <div class="toggle-info">
+                            <h4>Analytics Cookies</h4>
+                            <p>Help us understand how users interact with VIBEWAVE to improve our service.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="analyticsCookies" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="cookie-toggle">
+                        <div class="toggle-info">
+                            <h4>Marketing Cookies</h4>
+                            <p>Used to deliver personalized music recommendations and advertisements.</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="marketingCookies">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <button id="saveCookieSettings" class="tab-btn" style="background: rgba(255, 215, 0, 0.3); color: #ffd700;">
+                        <i class="fas fa-save"></i>
+                        Save Cookie Preferences
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>About Cookies</h2>
+                <p>Cookies are small text files that are placed on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and understanding how you use our service.</p>
+                
+                <h3>Why We Use Cookies</h3>
+                <p>At VIBEWAVE, we use cookies to:</p>
+                <ul>
+                    <li>Remember your login details and preferences</li>
+                    <li>Provide personalized music recommendations</li>
+                    <li>Analyze how our service is used to make improvements</li>
+                    <li>Ensure the security of your account</li>
+                    <li>Deliver relevant content and advertisements</li>
+                </ul>
+                
+                <p>For more detailed information about our cookie usage, please visit our <a href="cookie-policy.html" style="color: #ffd700;">Cookie Policy</a> page.</p>
+            </div>
+
+            <div class="update-date">
+                <p>This page was last updated on January 1, 2025</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                <p>&copy; 2025 VIBEWAVE. All rights reserved.</p>
+            </div>
+            <div class="footer-links">
+                <a href="legal.html">Terms of Service</a>
+                <a href="legal.html#privacy">Privacy Policy</a>
+                <a href="help.html">Help Center</a>
+                <a href="legal.html#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating music notes in the background
+        document.addEventListener('DOMContentLoaded', function() {
+            const background = document.getElementById('backgroundElements');
+            const notes = ['♩', '♪', '♫', '♬', '🎵', '🎶'];
+            
+            for (let i = 0; i < 15; i++) {
+                const note = document.createElement('div');
+                note.className = 'jazz-note';
+                note.textContent = notes[Math.floor(Math.random() * notes.length)];
+                note.style.left = Math.random() * 100 + 'vw';
+                note.style.animationDelay = Math.random() * 15 + 's';
+                note.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                background.appendChild(note);
+            }
+            
+            // Background toggle functionality
+            const toggleBtn = document.getElementById('toggleBg');
+            const bgText = document.getElementById('bgText');
+            const body = document.body;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (body.classList.contains('matte')) {
+                    body.classList.remove('matte');
+                    body.classList.add('shining');
+                    bgText.textContent = 'Matte Black';
+                } else {
+                    body.classList.remove('shining');
+                    body.classList.add('matte');
+                    bgText.textContent = 'Shining Black';
+                }
+            });
+
+            // Tab functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // FAQ toggle functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const icon = question.querySelector('i');
+                    
+                    answer.classList.toggle('active');
+                    
+                    if (answer.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+
+            // Cookie settings functionality
+            const saveCookieBtn = document.getElementById('saveCookieSettings');
+            
+            saveCookieBtn.addEventListener('click', () => {
+                const prefCookies = document.getElementById('prefCookies').checked;
+                const analyticsCookies = document.getElementById('analyticsCookies').checked;
+                const marketingCookies = document.getElementById('marketingCookies').checked;
+                
+                // In a real application, you would save these preferences
+                alert('Cookie preferences saved! Your settings have been updated.');
+                
+                // Show visual feedback
+                saveCookieBtn.textContent = 'Preferences Saved!';
+                saveCookieBtn.style.background = 'rgba(0, 255, 0, 0.2)';
+                saveCookieBtn.style.color = '#4CAF50';
+                
+                setTimeout(() => {
+                    saveCookieBtn.textContent = 'Save Cookie Preferences';
+                    saveCookieBtn.style.background = 'rgba(255, 215, 0, 0.3)';
+                    saveCookieBtn.style.color = '#ffd700';
+                }, 2000);
+            });
+
+            // Update current year in copyright
+            const yearElement = document.querySelector('.copyright p');
+            if(yearElement) {
+                yearElement.textContent = yearElement.textContent.replace('2025', new Date().getFullYear());
+            }
+        });
+    </script>
+</body>
+</html>
